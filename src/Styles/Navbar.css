@@ -2,16 +2,10 @@ div.navbar{
     width: 100%;
     height: auto;
     display: flex;
-    padding: 12px;
-    padding-left: 30px;
+    padding-left: 10px;
     padding-right: 30px;
     align-items: center;
     justify-content: space-between;
-    background-color: #191919;
-}
-
-.navbar h3{
-    color: white;
 }
 
 button.add-btn{
