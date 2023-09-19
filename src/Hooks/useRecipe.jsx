@@ -1,16 +1,15 @@
 import { useState, useEffect } from "react";
 import { fetchRecipeData } from '../services/api.jsx';
 
-export function useRecipe() {
+export function useRecipe(recipeId) {
     const [recipeData, setRecipeData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState(null)
 
     useEffect(() => {
-        // Récupération des données de la recette
         const fetchData = async () => {
             try {
-                const data = await fetchRecipeData();
+                const data = await fetchRecipeData(recipeId);
                 setRecipeData(data);
                 setLoading(false);
             } catch (error) {
@@ -20,7 +19,7 @@ export function useRecipe() {
         };
 
         fetchData();
-    }, []);
+    }, [recipeId]);
 
     return { recipeData, loading, errorMessage };
 }
