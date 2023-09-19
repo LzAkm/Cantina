@@ -1,0 +1,13 @@
+ul.recipes-list{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+}
+
+li.link{
+    color: black;
+}
