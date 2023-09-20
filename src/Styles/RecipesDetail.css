@@ -49,11 +49,8 @@ div.title{
 }
 
 figure {
-    height: 400px;
-    display: flex;
-    overflow: hidden;
-    align-items: center;
-    justify-content: center;
+    width: 60%;
+    height: 450px;
 }
 
 .recipe-img {
@@ -92,7 +89,7 @@ hr.separator2 {
     margin-bottom: 30px;
 }
 
-.ingredients {
+.detail-ingredients {
     width: 95%;
     display: flex;
     text-align: left;
@@ -100,23 +97,23 @@ hr.separator2 {
     justify-content: center;
 }
 
-.ingredient {
+.detail-ingredient {
     height: auto;
     width: 400px;
     display: flex;
     flex-direction: row;
 }
 
-.ingredient input {
+.detail-ingredient input.detail-input {
     width: 16px;
     margin-right: 10px;
 }
 
-.ingredient input:hover {
+.detail-ingredient input.detail-input:hover {
     cursor: pointer;
 }
 
-.ingredient input:checked+label {
+.detail-ingredient input.detail-input:checked+label {
     text-decoration: line-through;
 }
 

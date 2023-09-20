@@ -1,11 +1,13 @@
 import '../Styles/AddRecipe.css'
+import '../Component/AddRecipeForm.jsx'
+import AddRecipeForm from '../Component/AddRecipeForm.jsx';
 
-function AddRecipes() {
+function AddRecipe() {
     return (
         <div>
-            <h1>Add recipe page</h1>
+            <AddRecipeForm/>
         </div>
     );
 }
 
-export default AddRecipes;
+export default AddRecipe;

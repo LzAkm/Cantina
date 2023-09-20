@@ -29,8 +29,12 @@ function RecipeDetail() {
           </div>
           <h4>#{recipeData.id}</h4>
         </div>
-        <figure>
-          <img className='recipe-img' src={recipeData.photo} alt='photo de la recette' />
+        <figure style={{
+          backgroundImage: `url("${recipeData.photo}")`,
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center center',
+        }}>
         </figure>
         <div className='principal-infos'>
           <div className='info'>
@@ -47,16 +51,16 @@ function RecipeDetail() {
           </div>
         </div>
         <hr className='separator2' />
-        <div className='ingredients'>
+        <div className='detail-ingredients'>
           <h3>Les ingrédients</h3>
           <p>Pour cette recette vous allez avoir besoin de : </p>
           {recipeData.ingredients.map((ingredient, index) => {
             // Vérifiez si l'ingrédient existe (non vide)
             if (ingredient[0] && ingredient[1]) {
               return (
-                <div className='ingredient' key={index}>
-                  <input type='checkbox' />
-                  <label>{ingredient[0]} {ingredient[1]}</label>
+                <div className='detail-ingredient' key={index}>
+                  <input className='detail-input' type='checkbox' />
+                  <label className='detail-label'>{ingredient[0]} {ingredient[1]}</label>
                 </div>
               );
             }

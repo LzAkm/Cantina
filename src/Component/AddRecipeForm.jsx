@@ -105,10 +105,10 @@ function AddRecipeForm() {
                             required
                         />
                     </div>
-                    <div className='ingredients'>
+                    <div className='form-ingredients'>
                         <label>Ingrédients</label>
                         {recipe.ingredients.map((ingredient, index) => (
-                            <div className='ingredient' key={index}>
+                            <div className='form-ingredient' key={index}>
                                 <input
                                     type="text"
                                     value={ingredient}

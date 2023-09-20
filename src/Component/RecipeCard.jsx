@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { useRecipe } from '../Hooks/useRecipe.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
+/* import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; */
 
 function RecipeCard({ recipe }) {
   const { recipeData, errorMessage, loading } = useRecipe(recipe.id);
@@ -27,11 +29,15 @@ function RecipeCard({ recipe }) {
     badgeClass = 'red';
   }
 
+  function deleteRecipe() {
+    console.log('Delete button linked');
+  } 
+
   return (
     <div className='recipe-card'>
       <div className='actions'>
-        <FontAwesomeIcon className='icon' icon={faTrash} />
-        <FontAwesomeIcon className='icon' icon={faPen} />
+        <button className='delete-btn' onClick={() => deleteRecipe()}><FontAwesomeIcon className='icon' icon={faTrash} /></button>
+        <button className='modify-btn'><FontAwesomeIcon className='icon' icon={faPen} /></button>
       </div>
       <img className='recipe-img' src={recipeData.photo} alt='' />
       <div className='recipe-body'>
