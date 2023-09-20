@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import '../Styles/AddRecipeForm.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareMinus } from '@fortawesome/free-solid-svg-icons';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function AddRecipeForm() {
     const [recipe, setRecipe] = useState({
@@ -42,8 +44,9 @@ function AddRecipeForm() {
 
     // Soumettre le formulaire
     const handleSubmit = (event) => {
-      event.preventDefault();
-      console.log(recipe);
+        event.preventDefault();
+        toast.success('Votre recette a été ajoutée');
+        console.log(recipe);
     };
 
     return (
@@ -135,6 +138,20 @@ function AddRecipeForm() {
                 </div>
                 <button className='add-recipe' type="submit">Publier la recette</button>
             </form>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
+            <ToastContainer />
+
         </div>
     );
 }
