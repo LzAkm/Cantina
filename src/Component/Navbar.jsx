@@ -10,7 +10,7 @@ function Navigationbar() {
             <Link to='/'>
                 <img src={logo} className='logo' alt="logo cantina"/> 
             </Link>
-            <button className='add-btn'>ajouter une recette <FontAwesomeIcon icon={faPlus} /></button>
+            <button className='add-btn'><Link to='/addRecipe'>ajouter une recette </Link><FontAwesomeIcon icon={faPlus} /></button>
         </div>
     );
 }
