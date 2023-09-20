@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useRecipe } from '../Hooks/useRecipe.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { fetchDeleteRecipe } from '../services/api';
 /* import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; */
 
@@ -29,9 +30,15 @@ function RecipeCard({ recipe }) {
     badgeClass = 'red';
   }
 
-  function deleteRecipe() {
-    console.log('Delete button linked');
-  } 
+function deleteRecipe() {
+  try {
+    fetchDeleteRecipe(recipe.id);
+    console.log('Recette supprimée avec succès.');
+  } catch (error) {
+    console.error('Erreur lors de la suppression de la recette :', error.message);
+  }
+}
+
 
   return (
     <div className='recipe-card'>

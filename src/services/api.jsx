@@ -21,3 +21,14 @@ export const fetchAllRecipes = async () => {
     throw error;
   }
 };
+
+
+// Supprimer une recette
+export const fetchDeleteRecipe = async (recipeId) => {
+  try {
+    const response = await axios.delete(`${API_BASE_URL}/recipe/${recipeId}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
