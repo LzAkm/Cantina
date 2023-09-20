@@ -1,0 +1,165 @@
+div.form-content{
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+form{
+    width: 600px;
+    height: auto;
+    display: flex;
+    padding: 30px;
+    text-align: center;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    font-family: 'Poppins', sans-serif;
+}
+
+form h2{
+    margin-bottom: 10px;
+}
+
+div.input-content{
+    width: 90%;
+}
+
+div.field{
+    width: 100%;
+    display: flex;
+    text-align: left;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    flex-direction: column;
+}
+
+.field input{
+    width: 100%;
+    height: 30px;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #fca21160;
+}
+
+textarea{
+    width: 100%;
+    border: none;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    background-color: #fca21160;
+}
+
+div.steps{
+    width: 100%;
+    display: flex;
+    margin-top: 30px;
+    justify-content: center;
+}
+
+div.step{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.steps input{
+    width: 100%;
+    height: 30px;
+    border: none;
+    padding: 10px;
+    display: flex;
+    margin-right: 5px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: #fca21160;
+}
+
+button.minus{
+    border: none;
+    background-color: transparent;
+}
+
+.minus-icon{
+    font-size: 32px;
+    color: #fca211;
+    margin-top: -8px;
+}
+
+button.add-step{
+    border: none;
+    width: 140px;
+    padding: 5px;
+    color: white;
+    font-size: 0.78rem;
+    border-radius: 5px;
+    margin-bottom: 30px;
+    background-color: #1a1a1a;
+}
+
+
+div.ingredients{
+    width: 100%;
+    display: flex;
+    margin-top: 40px;
+    justify-content: center;
+}
+
+div.ingredient{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.ingredients input{
+    width: 100%;
+    height: 30px;
+    border: none;
+    padding: 10px;
+    display: flex;
+    margin-right: 5px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: #fca21160;
+}
+
+button.minus{
+    border: none;
+    background-color: transparent;
+}
+
+.minus-icon{
+    font-size: 32px;
+    color: #fca211;
+    margin-top: -8px;
+}
+
+button.add-ingredient{
+    border: none;
+    width: 150px;
+    padding: 5px;
+    font-size: 0.78rem;
+    color: white;
+    border-radius: 5px;
+    background-color: #131313;
+}
+
+button.add-recipe{
+    width: 190px;
+    padding: 5px;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    background-color: #fca211;
+}
