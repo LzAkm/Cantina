@@ -13,7 +13,12 @@ button.add-btn{
     padding: 5px;
     color: black;
     border-radius: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 12px;
+    padding-right: 12px;
     background-color: white;
+}
+
+a.add-recipe-link{
+    color: black;
+    text-decoration: none;
 }
