@@ -10,11 +10,36 @@ function AddRecipeForm() {
         titre: '',
         description: '',
         niveau: '',
-        personnes: '',
-        tempsPreparation: '',
-        ingredients: [''],
+        personnes: 0,
+        tempsPreparation: 0,
+        ingredients: [{ quantity: '', unit: '', name: '' }],
         etapes: [''],
     });
+
+    // Gérer les changements dans les champs d'ingrédients
+    const handleIngredientChange = (index, field, value) => {
+        const updatedIngredients = [...recipe.ingredients];
+        updatedIngredients[index][field] = value;
+        setRecipe({ ...recipe, ingredients: updatedIngredients });
+    };
+
+    // Ajouter un nouvel ingrédient
+    const addIngredient = () => {
+        setRecipe({
+            ...recipe,
+            ingredients: [
+                ...recipe.ingredients,
+                { quantity: '', unit: '', name: '' }, 
+            ],
+        });
+    };       
+
+    // Supprimer un ingrédient
+    const removeIngredient = (index) => {
+        const updatedIngredients = [...recipe.ingredients];
+        updatedIngredients.splice(index, 1);
+        setRecipe({ ...recipe, ingredients: updatedIngredients });
+    };
 
     // Gérer les changements dans les champs de texte
     const handleInputChange = (event) => {
@@ -42,12 +67,38 @@ function AddRecipeForm() {
         setRecipe({ ...recipe, [field]: updatedArray });
     };
 
-    // Soumettre le formulaire
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        toast.success('Votre recette a été ajoutée');
-        console.log(recipe);
+    const newRecipe = {
+        titre: recipe.titre,
+        description: recipe.description,
+        niveau: recipe.niveau,
+        personnes: recipe.personnes,
+        tempsPreparation: recipe.tempsPreparation,
+        ingredients: recipe.ingredients.filter((ingredient) => 
+            ingredient.quantity.trim() !== '' || 
+            ingredient.unit.trim() !== '' || 
+            ingredient.name.trim() !== ''
+        ),
+        etapes: recipe.etapes.filter((etape) => etape.trim() !== ''),
     };
+    
+
+    // Soumettre le formulaire
+    const handleSubmit = () => {
+        // Réinitialisez le formulaire
+        setRecipe({
+            titre: '',
+            description: '',
+            niveau: '',
+            personnes: '',
+            tempsPreparation: '',
+            ingredients: [{ quantity: '', unit: '', name: '' }],
+            etapes: [''],
+        });
+
+        toast.success('Votre recette a été ajoutée');
+        console.log(newRecipe);
+    };
+
 
     return (
         <div className='form-content'>
@@ -75,13 +126,16 @@ function AddRecipeForm() {
                     </div>
                     <div className='field'>
                         <label>Niveau de difficulté</label>
-                        <input
-                            type="text"
+                        <select
                             name="niveau"
                             value={recipe.niveau}
                             onChange={handleInputChange}
                             required
-                        />
+                        >
+                            <option value="padawan">Padawan</option>
+                            <option value="jedi">Jedi</option>
+                            <option value="maitre">Maître</option>
+                        </select>
                     </div>
                     <div className='field'>
                         <label>Nombre de personnes</label>
@@ -110,16 +164,37 @@ function AddRecipeForm() {
                         {recipe.ingredients.map((ingredient, index) => (
                             <div className='form-ingredient' key={index}>
                                 <input
-                                    type="text"
-                                    value={ingredient}
-                                    onChange={(event) => handleStepIngredientChange(index, event, 'ingredients')}
-                                    required
+                                    type="number"
+                                    placeholder="Quantité"
+                                    value={ingredient.quantity}
+                                    onChange={(e) => handleIngredientChange(index, 'quantity', e.target.value)}
                                 />
-                                <button className='minus' type="button" onClick={() => removeStepIngredient(index, 'ingredients')}><FontAwesomeIcon className='minus-icon' icon={faSquareMinus} /></button>
+                                <select
+                                    value={ingredient.unit}
+                                    onChange={(e) => handleIngredientChange(index, 'unit', e.target.value)}
+                                >
+                                    <option value="dg">dg</option>
+                                    <option value="g">g</option>
+                                    <option value="ml">ml</option>
+                                    <option value="cl">cl</option>
+                                    <option value="L">L</option>
+                                </select>
+                                <input
+                                    type="text"
+                                    placeholder="Ingrédient"
+                                    value={ingredient.name}
+                                    onChange={(e) => handleIngredientChange(index, 'name', e.target.value)}
+                                />
+                                <button className='minus' type="button" onClick={() => removeIngredient(index)}>
+                                    <FontAwesomeIcon className='minus-icon' icon={faSquareMinus} />
+                                </button>
                             </div>
                         ))}
-                        <button className='add-ingredient' type="button" onClick={() => addStepIngredient('ingredients')}>Ajouter un ingrédient</button>
+                        <button className='add-ingredient' type="button" onClick={addIngredient}>
+                            Ajouter un ingrédient
+                        </button>
                     </div>
+
                     <div className='steps'>
                         <label>Étapes de préparation</label>
                         {recipe.etapes.map((etape, index) => (
@@ -151,7 +226,6 @@ function AddRecipeForm() {
                 theme="light"
             />
             <ToastContainer />
-
         </div>
     );
 }
