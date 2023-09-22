@@ -2,6 +2,7 @@
     height: auto;
     width: 300px;
     margin: 10px;
+    padding: 10px;
     display: flex;
     text-align: left;
     position: relative;
@@ -71,12 +72,11 @@ div.badge {
     width: 100%;
     height: 200px;
     object-fit: cover;
-    border-radius: 8px 8px 0 0;
+    border-radius: 8px;
 }
 
 .recipe-body {
     width: 100%;
-    padding: 15px;
     margin-top: 10px;
     padding-bottom: 0;
     flex-direction: column;
@@ -132,7 +132,7 @@ p.bold{
 
 .recipe-footer{
     width: 100%;
-    padding: 10px;
+    margin-top: 5px;
     align-items: center;
     justify-content: center;
 }
