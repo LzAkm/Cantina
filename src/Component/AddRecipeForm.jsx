@@ -4,8 +4,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareMinus } from '@fortawesome/free-solid-svg-icons';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { fetchAddRecipe } from '../services/api.jsx';
+import { useNavigate } from 'react-router-dom';
 
 function AddRecipeForm() {
+    const navigate = useNavigate();
+
     const [recipe, setRecipe] = useState({
         titre: '',
         description: '',
@@ -29,10 +33,10 @@ function AddRecipeForm() {
             ...recipe,
             ingredients: [
                 ...recipe.ingredients,
-                { quantity: '', unit: '', name: '' }, 
+                { quantity: '', unit: '', name: '' },
             ],
         });
-    };       
+    };
 
     // Supprimer un ingrédient
     const removeIngredient = (index) => {
@@ -44,7 +48,8 @@ function AddRecipeForm() {
     // Gérer les changements dans les champs de texte
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-        setRecipe({ ...recipe, [name]: value });
+        const finalValue = event.target.type === "number" ? Number(value) : value
+        setRecipe({ ...recipe, [name]: finalValue });
     };
 
     // Gérer les changements dans les champs d'étapes et d'ingrédients
@@ -67,41 +72,44 @@ function AddRecipeForm() {
         setRecipe({ ...recipe, [field]: updatedArray });
     };
 
-    const newRecipe = {
-        titre: recipe.titre,
-        description: recipe.description,
-        niveau: recipe.niveau,
-        personnes: recipe.personnes,
-        tempsPreparation: recipe.tempsPreparation,
-        ingredients: recipe.ingredients.filter((ingredient) => 
-            ingredient.quantity.trim() !== '' || 
-            ingredient.unit.trim() !== '' || 
-            ingredient.name.trim() !== ''
-        ),
-        etapes: recipe.etapes.filter((etape) => etape.trim() !== ''),
-    };
-    
 
     // Soumettre le formulaire
     const handleSubmit = () => {
-        // Réinitialisez le formulaire
-        setRecipe({
-            titre: '',
-            description: '',
-            niveau: '',
-            personnes: '',
-            tempsPreparation: '',
-            ingredients: [{ quantity: '', unit: '', name: '' }],
-            etapes: [''],
-        });
+        // Transformer les ingrédients en tableau
+        const transformedIngredients = recipe.ingredients.map((ingredient) => [
+            `${ingredient.quantity}${ingredient.unit}`,
+            ingredient.name,
+        ]);
+
+        const newRecipe = {
+            titre: recipe.titre,
+            description: recipe.description,
+            niveau: recipe.niveau,
+            personnes: recipe.personnes,
+            tempsPreparation: recipe.tempsPreparation,
+            ingredients: transformedIngredients,
+            etapes: recipe.etapes.filter((etape) => etape.trim() !== ''),
+        };
+
+        try {
+            fetchAddRecipe(newRecipe);
+            return navigate('/');
+        } catch (error) {
+            console.error("Erreur lors de l'ajout de la recette :", error.message);
+        }
 
         toast.success('Votre recette a été ajoutée');
-        console.log(newRecipe);
     };
+
 
 
     return (
         <div className='form-content'>
+
+            {/* <FormRecipe onSubmit={handleSubmit} /> */}
+            {/* <FormRecipe onSubmit={handleSubmit} data={recipe} /> */}
+
+
             <form onSubmit={handleSubmit}>
                 <h2>Ajouter une nouvelle recette</h2>
                 <div className='input-content'>
@@ -165,6 +173,7 @@ function AddRecipeForm() {
                             <div className='form-ingredient' key={index}>
                                 <input
                                     type="number"
+                                    min={0}
                                     placeholder="Quantité"
                                     value={ingredient.quantity}
                                     onChange={(e) => handleIngredientChange(index, 'quantity', e.target.value)}
