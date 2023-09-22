@@ -2,27 +2,44 @@ import React, { useEffect, useState } from 'react';
 import '../Styles/RecipesList.css';
 import RecipeCard from '../Component/RecipeCard.jsx';
 import { useRecipes } from '../Hooks/useRecipes.jsx';
-import { fetchDeleteRecipe } from '../services/api';
+import { fetchDeleteRecipe, fetchAddRecipe } from '../services/api';
 import { faSquareXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function RecipesList() {
-  const { recipes: recipesList, loading } = useRecipes();
+  const { recipes, loading } = useRecipes();
+  const [recipesList, setRecipesList] = useState(recipes);
   const [selectValue, setSelectValue] = useState('');
   const [minPortion, setMinPortion] = useState('');
   const [maxPortion, setMaxPortion] = useState('');
   const [title, setTitle] = useState('');
   const [time, setTime] = useState('');
 
+  useEffect(() => {
+    setRecipesList(recipes)
+  }, [recipes])
+
   const handleRecipeDelete = async (recipeId) => {
     try {
       await fetchDeleteRecipe(recipeId);
+      setRecipesList(recipesList.filter(r => r.id !== recipeId))
       console.log('Recette supprimée avec succès.');
-      // refetchRecipes(); // api service
     } catch (error) {
       console.error('Erreur lors de la suppression de la recette :', error.message);
     }
   };
+
+  const handleRecipeAdd = async (recipeId) => {
+    try {
+      const addedRecipe = await fetchAddRecipe(recipeId);
+      const updatedRecipesList = [...recipesList, addedRecipe];
+      setRecipesList(updatedRecipesList);
+      console.log('Recette ajoutée avec succès.');
+    } catch (error) {
+      console.error('Erreur lors de l\'ajout de la recette :', error.message);
+    }
+  };  
+
 
   function filterRecipes(recipe) {
     let shouldInclude = true;
@@ -57,7 +74,6 @@ function RecipesList() {
       console.log(maxPortion);
     }
 
-
     return shouldInclude;
   }
 
@@ -89,7 +105,7 @@ function RecipesList() {
           max={4}
           value={minPortion}
           onKeyDown={(e) => e.preventDefault()}
-          onInput={(event) => setMinPortion(event.target.value)}
+          onChange={(event) => setMinPortion(event.target.value)}
         />
         <input className='max-personne'
           type='number'
@@ -98,7 +114,7 @@ function RecipesList() {
           max={15}
           value={maxPortion}
           onKeyDown={(e) => e.preventDefault()}
-          onInput={(event) => setMaxPortion(event.target.value)}
+          onChange={(event) => setMaxPortion(event.target.value)}
         />
         <input className='filter'
           type='number'
@@ -118,10 +134,11 @@ function RecipesList() {
           <div>Loading...</div>
         ) : (
           filteredRecipes.map((recipe) => (
-            <RecipeCard key={recipe.id} recipe={recipe} onDelete={handleRecipeDelete} />
+            <RecipeCard key={recipe.id} recipe={recipe} onDelete={handleRecipeDelete} onAdd={() => handleRecipeAdd(recipe.id)} />
           ))
         )}
       </ul>
+
     </div>
   );
 }

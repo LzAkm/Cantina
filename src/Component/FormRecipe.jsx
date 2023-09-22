@@ -49,7 +49,7 @@ function FormRecipe() {
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-        
+
         if (!value.startsWith('https://') && !value.startsWith('http://')) {
             setPhotoError("⚠️ L'URL doit commencer par 'http://' ou 'https://'");
         } else {

@@ -33,6 +33,16 @@ export const fetchAddRecipe = async (recipe) => {
   }
 };
 
+// Modifier une recette
+export const fetchEditRecipe = async (recipeId) => {
+  try {
+    const response = await axios.put(`${API_BASE_URL}/recipe/${recipeId}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 // Supprimer une recette
 export const fetchDeleteRecipe = async (recipeId) => {
   try {
