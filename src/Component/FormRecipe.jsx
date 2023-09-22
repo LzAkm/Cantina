@@ -1,4 +1,4 @@
-import '../Styles/RecipeForm.css';
+import '../Styles/FormRecipe.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareMinus } from '@fortawesome/free-solid-svg-icons';
 import 'react-toastify/dist/ReactToastify.css';
@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 
 function FormRecipe() {
     const [recipe, setRecipe] = useState({
+        photo: '',
         titre: '',
         description: '',
         niveau: '',
@@ -44,8 +45,17 @@ function FormRecipe() {
     };
 
     // Gérer les changements dans les champs de texte
+    const [photoError, setPhotoError] = useState('');
+
     const handleInputChange = (event) => {
         const { name, value } = event.target;
+        
+        if (!value.startsWith('https://') && !value.startsWith('http://')) {
+            setPhotoError("⚠️ L'URL doit commencer par 'http://' ou 'https://'");
+        } else {
+            setPhotoError('');
+        }
+
         const finalValue = event.target.type === "number" ? Number(value) : value
         setRecipe({ ...recipe, [name]: finalValue });
     };
@@ -81,6 +91,7 @@ function FormRecipe() {
         ]);
 
         const newRecipe = {
+            photo: recipe.photo,
             titre: recipe.titre,
             description: recipe.description,
             niveau: recipe.niveau,
@@ -102,118 +113,129 @@ function FormRecipe() {
 
 
     return (
-            <form onSubmit={handleSubmit}>
-                <h2>Ajouter une nouvelle recette</h2>
-                <div className='input-content'>
-                    <div className='field'>
-                        <label>Titre</label>
-                        <input
-                            type="text"
-                            name="titre"
-                            value={recipe.titre}
-                            onChange={handleInputChange}
-                            required
-                        />
-                    </div>
-                    <div className='field'>
-                        <label>Description</label>
-                        <textarea
-                            name="description"
-                            value={recipe.description}
-                            onChange={handleInputChange}
-                            required
-                        />
-                    </div>
-                    <div className='field'>
-                        <label>Niveau de difficulté</label>
-                        <select
-                            name="niveau"
-                            value={recipe.niveau}
-                            onChange={handleInputChange}
-                            required
-                        >
-                            <option value="padawan">Padawan</option>
-                            <option value="jedi">Jedi</option>
-                            <option value="maitre">Maître</option>
-                        </select>
-                    </div>
-                    <div className='field'>
-                        <label>Nombre de personnes</label>
-                        <input
-                            type="number"
-                            name="personnes"
-                            value={recipe.personnes}
-                            onChange={handleInputChange}
-                            min="1"
-                            required
-                        />
-                    </div>
-                    <div className='field'>
-                        <label>Temps de préparation (en min)</label>
-                        <input
-                            type="number"
-                            name="tempsPreparation"
-                            value={recipe.tempsPreparation}
-                            onChange={handleInputChange}
-                            min="1"
-                            required
-                        />
-                    </div>
-                    <div className='form-ingredients'>
-                        <label>Ingrédients</label>
-                        {recipe.ingredients.map((ingredient, index) => (
-                            <div className='form-ingredient' key={index}>
-                                <input
-                                    type="number"
-                                    min={0}
-                                    placeholder="Quantité"
-                                    value={ingredient.quantity}
-                                    onChange={(e) => handleIngredientChange(index, 'quantity', e.target.value)}
-                                />
-                                <select
-                                    value={ingredient.unit}
-                                    onChange={(e) => handleIngredientChange(index, 'unit', e.target.value)}
-                                >
-                                    <option value="dg">dg</option>
-                                    <option value="g">g</option>
-                                    <option value="ml">ml</option>
-                                    <option value="cl">cl</option>
-                                    <option value="L">L</option>
-                                </select>
-                                <input
-                                    type="text"
-                                    placeholder="Ingrédient"
-                                    value={ingredient.name}
-                                    onChange={(e) => handleIngredientChange(index, 'name', e.target.value)}
-                                />
-                                <button className='minus' type="button" onClick={() => removeIngredient(index)}>
-                                    <FontAwesomeIcon className='minus-icon' icon={faSquareMinus} />
-                                </button>
-                            </div>
-                        ))}
-                        <button className='add-ingredient' type="button" onClick={addIngredient}>
-                            Ajouter un ingrédient
-                        </button>
-                    </div>
-
-                    <div className='steps'>
-                        <label>Étapes de préparation</label>
-                        {recipe.etapes.map((etape, index) => (
-                            <div className='step' key={index}>
-                                <input
-                                    type="text"
-                                    value={etape}
-                                    onChange={(event) => handleStepIngredientChange(index, event, 'etapes')}
-                                    required
-                                />
-                                <button className='minus' type="button" onClick={() => removeStepIngredient(index, 'etapes')}><FontAwesomeIcon className='minus-icon' icon={faSquareMinus} /></button>
-                            </div>
-                        ))}
-                        <button className='add-step' type="button" onClick={() => addStepIngredient('etapes')}>Ajouter une étape</button>
-                    </div>
+        <form onSubmit={handleSubmit}>
+            <h2>Ajouter une nouvelle recette</h2>
+            <div className='input-content'>
+                <div className='field'>
+                    <label>Photo de la recette</label>
+                    <input
+                        type='url'
+                        name='photo'
+                        value={recipe.photo}
+                        onChange={handleInputChange}
+                        placeholder='https://...'
+                    />
+                    {photoError && <p className='error-message'>{photoError}</p>}
                 </div>
-                <button className='add-recipe' type="submit">Publier la recette</button>
-            </form>
+                <div className='field'>
+                    <label>Titre</label>
+                    <input
+                        type="text"
+                        name="titre"
+                        value={recipe.titre}
+                        onChange={handleInputChange}
+                        required
+                    />
+                </div>
+                <div className='field'>
+                    <label>Description</label>
+                    <textarea
+                        name="description"
+                        value={recipe.description}
+                        onChange={handleInputChange}
+                        required
+                    />
+                </div>
+                <div className='field'>
+                    <label>Niveau de difficulté</label>
+                    <select
+                        name="niveau"
+                        value={recipe.niveau}
+                        onChange={handleInputChange}
+                        required
+                    >
+                        <option value="padawan">Padawan</option>
+                        <option value="jedi">Jedi</option>
+                        <option value="maitre">Maître</option>
+                    </select>
+                </div>
+                <div className='field'>
+                    <label>Nombre de personnes</label>
+                    <input
+                        type="number"
+                        name="personnes"
+                        value={recipe.personnes}
+                        onChange={handleInputChange}
+                        min="1"
+                        required
+                    />
+                </div>
+                <div className='field'>
+                    <label>Temps de préparation (en min)</label>
+                    <input
+                        type="number"
+                        name="tempsPreparation"
+                        value={recipe.tempsPreparation}
+                        onChange={handleInputChange}
+                        min="1"
+                        required
+                    />
+                </div>
+                <div className='form-ingredients'>
+                    <label>Ingrédients</label>
+                    {recipe.ingredients.map((ingredient, index) => (
+                        <div className='form-ingredient' key={index}>
+                            <input
+                                type="number"
+                                min={0}
+                                placeholder="Quantité"
+                                value={ingredient.quantity}
+                                onChange={(e) => handleIngredientChange(index, 'quantity', e.target.value)}
+                            />
+                            <select
+                                value={ingredient.unit}
+                                onChange={(e) => handleIngredientChange(index, 'unit', e.target.value)}
+                            >
+                                <option value="dg">dg</option>
+                                <option value="g">g</option>
+                                <option value="ml">ml</option>
+                                <option value="cl">cl</option>
+                                <option value="L">L</option>
+                            </select>
+                            <input
+                                type="text"
+                                placeholder="Ingrédient"
+                                value={ingredient.name}
+                                onChange={(e) => handleIngredientChange(index, 'name', e.target.value)}
+                            />
+                            <button className='minus' type="button" onClick={() => removeIngredient(index)}>
+                                <FontAwesomeIcon className='minus-icon' icon={faSquareMinus} />
+                            </button>
+                        </div>
+                    ))}
+                    <button className='add-ingredient' type="button" onClick={addIngredient}>
+                        Ajouter un ingrédient
+                    </button>
+                </div>
+
+                <div className='steps'>
+                    <label>Étapes de préparation</label>
+                    {recipe.etapes.map((etape, index) => (
+                        <div className='step' key={index}>
+                            <input
+                                type="text"
+                                value={etape}
+                                onChange={(event) => handleStepIngredientChange(index, event, 'etapes')}
+                                required
+                            />
+                            <button className='minus' type="button" onClick={() => removeStepIngredient(index, 'etapes')}><FontAwesomeIcon className='minus-icon' icon={faSquareMinus} /></button>
+                        </div>
+                    ))}
+                    <button className='add-step' type="button" onClick={() => addStepIngredient('etapes')}>Ajouter une étape</button>
+                </div>
+            </div>
+            <button className='add-recipe' type="submit">Publier la recette</button>
+        </form>
     );
 }
 
