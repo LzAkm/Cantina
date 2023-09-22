@@ -30,21 +30,21 @@ function RecipeCard({ recipe }) {
     badgeClass = 'red';
   }
 
-function deleteRecipe() {
-  try {
-    fetchDeleteRecipe(recipe.id);
-    console.log('Recette supprimée avec succès.');
-  } catch (error) {
-    console.error('Erreur lors de la suppression de la recette :', error.message);
+  function deleteRecipe() {
+    try {
+      fetchDeleteRecipe(recipe.id);
+      console.log('Recette supprimée avec succès.');
+    } catch (error) {
+      console.error('Erreur lors de la suppression de la recette :', error.message);
+    }
   }
-}
 
 
   return (
     <div className='recipe-card'>
       <div className='actions'>
         <button className='delete-btn' onClick={() => deleteRecipe()}><FontAwesomeIcon className='icon' icon={faTrash} /></button>
-        <button className='modify-btn'><FontAwesomeIcon className='icon' icon={faPen} /></button>
+        <button className='modify-btn'><Link to={'/editRecipe'}><FontAwesomeIcon className='icon' icon={faPen} /></Link></button>
       </div>
       <img className='recipe-img' src={recipeData.photo} alt='' />
       <div className='recipe-body'>
@@ -58,7 +58,7 @@ function deleteRecipe() {
             <p className='bold'>{recipeData.tempsPreparation} min</p>
           </div>
           <div className='proportion'>
-            <p className='grey'>Proportion</p>
+            <p className='grey'>Portion</p>
             <p className='bold'>{recipeData.personnes} personnes</p>
           </div>
         </div>
