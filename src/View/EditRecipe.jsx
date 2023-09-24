@@ -1,18 +1,18 @@
 import React from 'react';
-import '../Styles/EditRecipe.css';
 import EditForm from '../Component/EditForm';
+import { useParams } from 'react-router';
+import { useRecipe } from '../Hooks/useRecipe';
 
-function EditRecipe({ recipeToEdit, onSubmit }) {
+function EditRecipe() {
+  const id = parseInt(useParams().id, 10);
 
-  const handleEditSubmit = (editedRecipe) => {
-    console.log("Données de la recette à soumettre :", editedRecipe);
-    onSubmit(editedRecipe);
-  };
+  const {recipeData, loading} = useRecipe(id);
 
   return (
     <div className='form-content'>
-      <h1>Page de modification</h1>
-      <EditForm recipeToEdit={recipeToEdit} onSubmit={handleEditSubmit} />
+      {!loading && recipeData &&
+        <EditForm recipeToEdit={recipeData} />
+      }
     </div>
   );
 }

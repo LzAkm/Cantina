@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { fetchRecipeData } from '../services/api.jsx';
+import { fetchRecipeData } from '../services/api.js';
 
 export function useRecipe(recipeId) {
     const [recipeData, setRecipeData] = useState(null);

@@ -1,31 +1,37 @@
 import '../Styles/FormRecipe.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSquareMinus, faSquareXmark } from '@fortawesome/free-solid-svg-icons';
+import { faSquareMinus } from '@fortawesome/free-solid-svg-icons';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState } from 'react';
+import { fetchEditRecipe } from '../services/api.js';
+import { useNavigate } from 'react-router';
+import '../Styles/EditForm.css';
 
-function EditForm({ recipeToEdit, onSubmit }) {
-    const [isOpen, setIsOpen] = useState(true); 
+function EditForm({ recipeToEdit }) {
+    const [isOpen, setIsOpen] = useState(true);
+    const navigate = useNavigate();
 
     const toggleForm = () => {
         setIsOpen(!isOpen);
     };
 
     const [recipe, setRecipe] = useState({
+        id: recipeToEdit ? recipeToEdit.id : null,
         photo: recipeToEdit ? recipeToEdit.photo : '',
         titre: recipeToEdit ? recipeToEdit.titre : '',
         description: recipeToEdit ? recipeToEdit.description : '',
         niveau: recipeToEdit ? recipeToEdit.niveau : '',
         personnes: recipeToEdit ? recipeToEdit.personnes : 0,
         tempsPreparation: recipeToEdit ? recipeToEdit.tempsPreparation : 0,
-        ingredients: recipeToEdit ? recipeToEdit.ingredients : [{ quantity: '', unit: '', name: '' }],
+        ingredients: recipeToEdit ? recipeToEdit.ingredients : [['', '']],
         etapes: recipeToEdit ? recipeToEdit.etapes : [''],
     });
+
 
     // Gérer les changements dans les champs d'ingrédients
     const handleIngredientChange = (index, field, value) => {
         const updatedIngredients = [...recipe.ingredients];
-        updatedIngredients[index][field] = value;
+        updatedIngredients[index] = [field === 'quantity' ? value : updatedIngredients[index][0], field === 'name' ? value : updatedIngredients[index][1]];
         setRecipe({ ...recipe, ingredients: updatedIngredients });
     };
 
@@ -35,7 +41,7 @@ function EditForm({ recipeToEdit, onSubmit }) {
             ...recipe,
             ingredients: [
                 ...recipe.ingredients,
-                { quantity: '', unit: '', name: '' },
+                ['', ''],
             ],
         });
     };
@@ -47,9 +53,9 @@ function EditForm({ recipeToEdit, onSubmit }) {
         setRecipe({ ...recipe, ingredients: updatedIngredients });
     };
 
-    // Gérer les changements dans les champs de texte
     const [photoError, setPhotoError] = useState('');
 
+    // Gérer les changements dans les champs de texte
     const handleInputChange = (event) => {
         const { name, value } = event.target;
 
@@ -83,20 +89,24 @@ function EditForm({ recipeToEdit, onSubmit }) {
         setRecipe({ ...recipe, [field]: updatedArray });
     };
 
-    const handleSubmit = (event) => {
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        onSubmit(recipe);
+
+        try {
+            await fetchEditRecipe(recipe.id, recipe);
+            navigate('/');
+        } catch (error) {
+            console.error("Erreur lors de la modification de la recette :", error.message);
+        }
+
         toggleForm();
     };
 
+
     return (
         <form onSubmit={handleSubmit}>
-            <div className='edit-form-header'>
-                <h2>Modifier la recette</h2>
-                <button className='close-btn'>
-                    <FontAwesomeIcon icon={faSquareXmark} />
-                </button>
-            </div>
+            <h2>Modifier la recette</h2>
             <div className='input-content'>
                 <div className='field'>
                     <label>Photo de la recette</label>
@@ -168,26 +178,15 @@ function EditForm({ recipeToEdit, onSubmit }) {
                     {recipe.ingredients.map((ingredient, index) => (
                         <div className='form-ingredient' key={index}>
                             <input
-                                type="number"
-                                min={0}
+                                type="text"
                                 placeholder="Quantité"
                                 value={ingredient[0]}
                                 onChange={(e) => handleIngredientChange(index, 'quantity', e.target.value)}
                             />
-                            <select
-                                value={ingredient[1]}
-                                onChange={(e) => handleIngredientChange(index, 'unit', e.target.value)}
-                            >
-                                <option value="dg">dg</option>
-                                <option value="g">g</option>
-                                <option value="ml">ml</option>
-                                <option value="cl">cl</option>
-                                <option value="L">L</option>
-                            </select>
                             <input
                                 type="text"
                                 placeholder="Ingrédient"
-                                value={ingredient.name}
+                                value={ingredient[1]}
                                 onChange={(e) => handleIngredientChange(index, 'name', e.target.value)}
                             />
                             <button className='minus' type="button" onClick={() => removeIngredient(index)}>
@@ -195,6 +194,7 @@ function EditForm({ recipeToEdit, onSubmit }) {
                             </button>
                         </div>
                     ))}
+
                     <button className='add-ingredient' type="button" onClick={addIngredient}>
                         Ajouter un ingrédient
                     </button>
@@ -204,7 +204,7 @@ function EditForm({ recipeToEdit, onSubmit }) {
                     <label>Étapes de préparation</label>
                     {recipe.etapes.map((etape, index) => (
                         <div className='step' key={index}>
-                            <input
+                            <textarea
                                 type="text"
                                 value={etape}
                                 onChange={(event) => handleStepIngredientChange(index, event, 'etapes')}

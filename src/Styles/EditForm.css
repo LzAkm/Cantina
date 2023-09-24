@@ -1,0 +1,12 @@
+.step textarea{
+    margin-bottom: 15px;
+}
+
+button.edit-recipe{
+    border: none;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px;
+    background-color: #235edf;
+}

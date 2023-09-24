@@ -1,5 +1,4 @@
 import React from 'react';
-import '../Styles/EditRecipe.css';
 import EditForm from './EditForm';
 
 function EditRecipe({ recipeToEdit, onSubmit }) {

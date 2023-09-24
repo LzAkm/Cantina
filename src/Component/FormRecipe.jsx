@@ -2,7 +2,7 @@ import '../Styles/FormRecipe.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareMinus } from '@fortawesome/free-solid-svg-icons';
 import 'react-toastify/dist/ReactToastify.css';
-import { fetchAddRecipe } from '../services/api.jsx';
+import { fetchAddRecipe } from '../services/api.js';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
@@ -15,16 +15,18 @@ function FormRecipe() {
         niveau: '',
         personnes: 0,
         tempsPreparation: 0,
-        ingredients: [{ quantity: '', unit: '', name: '' }],
+        ingredients: [['', '']],
         etapes: [''],
     });
 
     // Gérer les changements dans les champs d'ingrédients
     const handleIngredientChange = (index, field, value) => {
         const updatedIngredients = [...recipe.ingredients];
+        updatedIngredients[index] = [...updatedIngredients[index]];
         updatedIngredients[index][field] = value;
         setRecipe({ ...recipe, ingredients: updatedIngredients });
     };
+    
 
     // Ajouter un nouvel ingrédient
     const addIngredient = () => {
@@ -32,7 +34,7 @@ function FormRecipe() {
             ...recipe,
             ingredients: [
                 ...recipe.ingredients,
-                { quantity: '', unit: '', name: '' },
+                ['', ''],
             ],
         });
     };
@@ -84,12 +86,6 @@ function FormRecipe() {
 
     // Soumettre le formulaire
     const handleSubmit = () => {
-        // Transformer les ingrédients en tableau
-        const transformedIngredients = recipe.ingredients.map((ingredient) => [
-            `${ingredient.quantity}${ingredient.unit}`,
-            ingredient.name,
-        ]);
-
         const newRecipe = {
             photo: recipe.photo,
             titre: recipe.titre,
@@ -97,7 +93,7 @@ function FormRecipe() {
             niveau: recipe.niveau,
             personnes: recipe.personnes,
             tempsPreparation: recipe.tempsPreparation,
-            ingredients: transformedIngredients,
+            ingredients: recipe.ingredients,
             etapes: recipe.etapes.filter((etape) => etape.trim() !== ''),
         };
 
@@ -189,26 +185,16 @@ function FormRecipe() {
                         <div className='form-ingredient' key={index}>
                             <input
                                 type="number"
-                                min={0}
                                 placeholder="Quantité"
-                                value={ingredient.quantity}
-                                onChange={(e) => handleIngredientChange(index, 'quantity', e.target.value)}
+                                min={1}
+                                value={ingredient[0]}
+                                onChange={(e) => handleIngredientChange(index, 0, e.target.value)}
                             />
-                            <select
-                                value={ingredient.unit}
-                                onChange={(e) => handleIngredientChange(index, 'unit', e.target.value)}
-                            >
-                                <option value="dg">dg</option>
-                                <option value="g">g</option>
-                                <option value="ml">ml</option>
-                                <option value="cl">cl</option>
-                                <option value="L">L</option>
-                            </select>
                             <input
                                 type="text"
                                 placeholder="Ingrédient"
-                                value={ingredient.name}
-                                onChange={(e) => handleIngredientChange(index, 'name', e.target.value)}
+                                value={ingredient[1]}
+                                onChange={(e) => handleIngredientChange(index, 1, e.target.value)}
                             />
                             <button className='minus' type="button" onClick={() => removeIngredient(index)}>
                                 <FontAwesomeIcon className='minus-icon' icon={faSquareMinus} />
@@ -224,7 +210,7 @@ function FormRecipe() {
                     <label>Étapes de préparation</label>
                     {recipe.etapes.map((etape, index) => (
                         <div className='step' key={index}>
-                            <input
+                            <textarea
                                 type="text"
                                 value={etape}
                                 placeholder='Etape de préparation'
