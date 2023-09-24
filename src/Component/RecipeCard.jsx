@@ -1,15 +1,37 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../Styles/RecipeCard.css';
-import { Link } from 'react-router-dom';
-import { useRecipe } from '../Hooks/useRecipe.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { fetchDeleteRecipe } from '../services/api';
-/* import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; */
+import EditRecipe from './EditRecipe';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { deleteRecipe } from '../store/reducers/recipeSlice';
+import { useRecipe } from '../Hooks/useRecipe.jsx';
 
-function RecipeCard({ recipe }) {
+function RecipeCard({ recipe, onEdit }) {
+  const dispatch = useDispatch();
   const { recipeData, errorMessage, loading } = useRecipe(recipe.id);
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleDeleteClick = () => {
+    dispatch(deleteRecipe(recipe.id));
+  };
+
+   // Fonction pour gérer le clic sur le bouton d'édition
+   const handleEditClick = () => {
+    if (recipeData) {
+      // Les données de la recette sont maintenant disponibles
+      console.log("Données de la recette à éditer :", recipeData);
+      setIsEditing(true);
+    }
+  };
+
+  // Soumission du formulaire 
+  const handleEditSubmit = (editedRecipe) => {
+    onEdit(editedRecipe);
+    setIsEditing(false);
+    console.log("Données de la recette :", recipeData);
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -30,21 +52,15 @@ function RecipeCard({ recipe }) {
     badgeClass = 'red';
   }
 
-  function deleteRecipe() {
-    try {
-      fetchDeleteRecipe(recipe.id);
-      console.log('Recette supprimée avec succès.');
-    } catch (error) {
-      console.error('Erreur lors de la suppression de la recette :', error.message);
-    }
-  }
-
-
   return (
     <div className='recipe-card'>
       <div className='actions'>
-        <button className='delete-btn' onClick={() => deleteRecipe()}><FontAwesomeIcon className='icon' icon={faTrash} /></button>
-        <button className='modify-btn'><Link to={'/editRecipe'}><FontAwesomeIcon className='icon' icon={faPen} /></Link></button>
+        <button className='delete-btn' onClick={handleDeleteClick}><FontAwesomeIcon className='icon' icon={faTrash} /></button>
+        <button className='edit-btn' onClick={handleEditClick}>
+          <Link to='/editRecipe'>
+            <FontAwesomeIcon className='icon' icon={faPen} />
+          </Link>
+        </button>
       </div>
       <img className='recipe-img' src={recipeData.photo} alt='' />
       <div className='recipe-body'>
@@ -64,10 +80,15 @@ function RecipeCard({ recipe }) {
         </div>
       </div>
       <div className='recipe-footer'>
-        <Link to={`/recipes/${recipe.id}`}>
-          <button className='details-btn'>En cuisine !</button>
-        </Link>
+        <button className='details-btn'><Link to={`/recipes/${recipe.id}`}>En cuisine !</Link></button>
       </div>
+
+      {isEditing && (
+        <EditRecipe
+          recipeData={recipeData}
+          onSubmit={handleEditSubmit}
+        />
+      )}
     </div>
   );
 }
