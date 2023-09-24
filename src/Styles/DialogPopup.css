@@ -1,0 +1,35 @@
+.custom-dialog {
+    left: 0;
+    top: -190px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+}
+
+.custom-dialog-content {
+    z-index: 2;
+    padding: 20px;
+    border-radius: 4px;
+    text-align: center;
+    position: absolute;
+    border: 1px solid white;
+    background-color: #1c2032;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.custom-dialog button {
+    margin: 5px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 4px;
+    background-color: #007bff;
+}
+
+.custom-dialog button:hover {
+    background-color: #0056b3;
+}

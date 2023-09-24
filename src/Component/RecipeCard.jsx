@@ -2,18 +2,27 @@ import React, { useEffect, useState } from 'react';
 import '../Styles/RecipeCard.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
-import EditRecipe from './EditRecipe';
 import { Link } from 'react-router-dom';
 import { useRecipe } from '../Hooks/useRecipe.jsx';
+import DialogPopup from './DialogPopup.jsx';
 
-function RecipeCard({ recipe, onEdit, onDelete }) {
+function RecipeCard({ recipe, onDelete }) {
   const { recipeData, errorMessage, loading } = useRecipe(recipe.id);
   const [isEditing, setIsEditing] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleDeleteClick = () => {
-    onDelete(recipe.id);
+    setIsDialogOpen(true);
   };
 
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false);
+  }
+
+  const handleConfirmDelete = () => {
+    onDelete(recipe.id);
+    setIsDialogOpen(false);
+  };
 
   // Fonction pour gérer le clic sur le bouton d'édition
   const handleEditClick = () => {
@@ -21,13 +30,6 @@ function RecipeCard({ recipe, onEdit, onDelete }) {
       setIsEditing(true);
       console.log(recipeData);
     }
-  };
-
-  // Soumission du formulaire 
-  const handleEditSubmit = (editedRecipe) => {
-    onEdit(editedRecipe);
-    setIsEditing(false);
-    console.log("Données de la recette :", recipeData);
   };
 
   if (loading) {
@@ -54,7 +56,7 @@ function RecipeCard({ recipe, onEdit, onDelete }) {
       <div className='actions'>
         <button className='delete-btn' onClick={handleDeleteClick}><FontAwesomeIcon className='icon' icon={faTrash} /></button>
         <button className='edit-btn' onClick={handleEditClick}>
-          <Link to={`/editRecipe/${recipe.id}`}> 
+          <Link to={`/editRecipe/${recipe.id}`}>
             <FontAwesomeIcon className='icon' icon={faPen} />
           </Link>
         </button>
@@ -80,12 +82,12 @@ function RecipeCard({ recipe, onEdit, onDelete }) {
         <button className='details-btn'><Link className='link' to={`/recipes/${recipe.id}`}>En cuisine !</Link></button>
       </div>
 
-      {isEditing && recipeData &&(
-        <EditRecipe
-          recipeToEdit={recipeData}
-          onSubmit={handleEditSubmit}
-        />
-      )}
+      <DialogPopup
+        isOpen={isDialogOpen}
+        onClose={handleCloseDialog}
+        onConfirm={handleConfirmDelete}
+        message="Voulez-vous vraiment supprimer la recette ?"
+      />
     </div>
   );
 }
