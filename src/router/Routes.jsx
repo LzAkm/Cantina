@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import RecipesList from '../View/RecipesList.jsx';
 import RecipeDetail from '../View/RecipeDetail.jsx';
 import AddRecipeForm from '../Component/AddRecipeForm.jsx';
-import EditRecipe from '../Component/EditRecipe.jsx';
+import EditRecipe from '../View/EditRecipe.jsx';
 
 function AppRouter() {
   return (
