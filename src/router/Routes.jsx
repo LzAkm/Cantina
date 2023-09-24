@@ -4,6 +4,7 @@ import RecipesList from '../View/RecipesList.jsx';
 import RecipeDetail from '../View/RecipeDetail.jsx';
 import AddRecipeForm from '../Component/AddRecipeForm.jsx';
 import EditRecipe from '../View/EditRecipe.jsx';
+import NotFound from '../View/NotFound.jsx';
 
 function AppRouter() {
   return (
@@ -12,6 +13,7 @@ function AppRouter() {
       <Route path="/" Component={RecipesList} />
       <Route path="/addRecipe" Component={AddRecipeForm} />
       <Route path="/editRecipe/:id" Component={EditRecipe} />
+      <Route path='*' element={<NotFound/>} />
     </Routes>
   );
 }
