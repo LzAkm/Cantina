@@ -133,6 +133,7 @@ function FormRecipe() {
                         type="text"
                         name="titre"
                         value={recipe.titre}
+                        placeholder='Titre'
                         onChange={handleInputChange}
                         required
                     />
@@ -141,6 +142,7 @@ function FormRecipe() {
                     <label>Description</label>
                     <textarea
                         name="description"
+                        placeholder='Description'
                         value={recipe.description}
                         onChange={handleInputChange}
                         required
@@ -225,6 +227,7 @@ function FormRecipe() {
                             <input
                                 type="text"
                                 value={etape}
+                                placeholder='Etape de préparation'
                                 onChange={(event) => handleStepIngredientChange(index, event, 'etapes')}
                                 required
                             />

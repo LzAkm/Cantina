@@ -15,13 +15,14 @@ form{
     height: auto;
     display: flex;
     padding: 30px;
+    color: white;
     text-align: center;
     border-radius: 8px;
     margin-bottom: 30px;
     align-items: center;
     flex-direction: column;
     justify-content: center;
-    background-color: white;
+    background-color: #1c2032;
     font-family: 'Poppins', sans-serif;
 }
 
@@ -42,22 +43,37 @@ div.field{
     flex-direction: column;
 }
 
+div.field label{
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
 .field input{
     width: 100%;
     height: 30px;
-    border: none;
     padding: 10px;
+    color: white;
     border-radius: 5px;
-    background-color: #fca21160;
+    border: 1px solid #62626f;
+    background-color: #151724;
+}
+
+.field input::placeholder{
+    color: #62626f;
 }
 
 textarea{
     width: 100%;
-    border: none;
     padding: 10px;
+    color: white;
     font-size: 1rem;
     border-radius: 5px;
-    background-color: #fca21160;
+    border: 1px solid #62626f;
+    background-color: #151724;
+}
+
+textarea::placeholder{
+    color: #62626f;
 }
 
 div.steps{
@@ -77,14 +93,25 @@ div.step{
 
 .steps input{
     width: 100%;
-    height: 30px;
-    border: none;
+    height: 45px;
     padding: 10px;
     display: flex;
+    color: white;
     margin-right: 5px;
     border-radius: 5px;
     margin-bottom: 10px;
-    background-color: #fca21160;
+    border: 1px solid #62626f;
+    background-color: #151724;
+}
+
+.steps input::placeholder{
+    color: #62626f;
+}
+
+
+.steps label{
+    margin-top: 10px;
+    margin-bottom: 7px;
 }
 
 button.minus{
@@ -94,7 +121,7 @@ button.minus{
 
 .minus-icon{
     font-size: 32px;
-    color: #fca211;
+    color: #235fe3;
     margin-top: -8px;
 }
 
@@ -130,13 +157,23 @@ div.form-ingredient{
 .form-ingredients input{
     width: 100%;
     height: auto;
-    border: none;
     padding: 10px;
     display: flex;
+    color: white;
     margin-right: 5px;
     border-radius: 5px;
     margin-bottom: 10px;
-    background-color: #fca21160;
+    border: 1px solid #62626f;
+    background-color: #151724;
+}
+
+.form-ingredients input::placeholder{
+    color: #62626f;
+}
+
+.form-ingredients label{
+    margin-top: 10px;
+    margin-bottom: 7px;
 }
 
 button.minus{
@@ -146,17 +183,18 @@ button.minus{
 
 .minus-icon{
     font-size: 32px;
-    color: #fca211;
+    color: #235fe3;
     margin-top: -8px;
 }
 
 div.field select {
     width: 100%;
     height: auto;
-    border: none;
     padding: 10px;
+    color: white;
     border-radius: 5px;
-    background-color: #fca21160; 
+    border: 1px solid #62626f;
+    background-color: #151724;
 }
 
 div.field select option {
@@ -167,12 +205,13 @@ div.field select option {
 div.form-ingredients select {
     width: 40%;
     height: auto;
-    border: none;
     padding: 10px;
+    color: white;
     margin-right: 5px;
     border-radius: 5px;
     margin-bottom: 10px;
-    background-color: #fca21160; 
+    border: 1px solid #62626f;
+    background-color: #151724;
 }
 
 div.form-ingredients select option {
@@ -185,10 +224,22 @@ button.add-ingredient{
     border: none;
     width: 150px;
     padding: 5px;
+    color: #aaaaaa;
     font-size: 0.78rem;
-    color: white;
     border-radius: 5px;
-    background-color: #131313;
+    border: 1px solid #62626f;
+    background-color: #181a29;
+}
+
+button.add-step{
+    border: none;
+    width: 150px;
+    padding: 5px;
+    color: #aaaaaa;
+    font-size: 0.78rem;
+    border-radius: 5px;
+    border: 1px solid #62626f;
+    background-color: #181a29;
 }
 
 button.add-recipe{
@@ -196,6 +247,7 @@ button.add-recipe{
     padding: 5px;
     border: none;
     color: white;
+    margin-top: 20px;
     border-radius: 5px;
-    background-color: #fca211;
+    background-color: #235fe3;
 }
