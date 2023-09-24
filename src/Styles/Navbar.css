@@ -11,14 +11,14 @@ div.navbar{
 button.add-btn{
     border: none;
     padding: 5px;
-    color: black;
+    color: white;
     border-radius: 5px;
     padding-left: 12px;
     padding-right: 12px;
-    background-color: white;
+    background-color: #235fe3;
 }
 
 a.add-recipe-link{
-    color: black;
+    color: white;
     text-decoration: none;
 }

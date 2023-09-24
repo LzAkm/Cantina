@@ -1,7 +1,9 @@
 div.form-content{
+    z-index: 1;
     width: 100%;
     height: auto;
     display: flex;
+    position: absolute;
     align-items: center;
     flex-direction: column;
     justify-content: center;

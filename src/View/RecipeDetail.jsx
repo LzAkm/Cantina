@@ -55,7 +55,6 @@ function RecipeDetail() {
           <h3>Les ingrédients</h3>
           <p>Pour cette recette vous allez avoir besoin de : </p>
           {recipeData.ingredients.map((ingredient, index) => {
-            // Vérifiez si l'ingrédient existe (non vide)
             if (ingredient[0] && ingredient[1]) {
               return (
                 <div className='detail-ingredient' key={index}>
@@ -74,7 +73,6 @@ function RecipeDetail() {
             <p className='citation'>: "Que la force soit avec toi."</p>
           </div>
           {recipeData.etapes.map((etape, index) => {
-            // Vérifiez si l'étape existe (non vide)
             if (etape) {
               return (
                 <div className='step' key={index}>

@@ -11,7 +11,7 @@ function AppRouter() {
       <Route path="/recipes/:id" Component={RecipeDetail} />
       <Route path="/" Component={RecipesList} />
       <Route path="/addRecipe" Component={AddRecipeForm} />
-      <Route path="/editRecipe" Component={EditRecipe} />
+      <Route path="/editRecipe/:id" Component={EditRecipe} />
     </Routes>
   );
 }

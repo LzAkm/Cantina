@@ -4,13 +4,14 @@
     margin: 10px;
     padding: 10px;
     display: flex;
+    color: white;
     text-align: left;
     position: relative;
     border-radius: 8px;
     align-items: center;
     flex-direction: column;
     border: 1px solid #ddd;
-    background-color: #fff;
+    background-color: #1c2032;
     font-family: 'Poppins', sans-serif;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -37,14 +38,14 @@ button.delete-btn{
     background-color: #181818;
 }
 
-button.modify-btn{
+button.edit-btn{
     border: none;
     padding: 2px;
     border-radius: 5px;
     background-color: #181818;
 }
 
-button.delete-btn, button.modify-btn:hover{
+button.delete-btn, button.edit-btn:hover{
     cursor: pointer;
 }
 
@@ -143,5 +144,10 @@ button.details-btn{
     border: none;
     border-radius: 5px;
     color: whitesmoke;
-    background-color: #181818;
+    background-color: #235fe3;
+}
+
+.details-btn .link{
+    color: white;
+    text-decoration: none;
 }

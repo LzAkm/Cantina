@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// Fetch d'une recette
-export const fetchRecipeData = async (recipeId) => {
+// Requete pour avoir une recette
+export async function fetchRecipeData(recipeId) {
   const API_RECIPE_URL = `http://localhost:9000/api/recipe/${recipeId}`;
   try {
     const response = await axios.get(`${API_RECIPE_URL}`); 
@@ -13,18 +13,18 @@ export const fetchRecipeData = async (recipeId) => {
 
 const API_BASE_URL = 'http://localhost:9000/api';
 
-// Fetch de toutes les recettes
-export const fetchAllRecipes = async () => {
+// Requete pour avoir toutes les recettes
+export async function fetchAllRecipes() {
   try {
     const response = await axios.get(`${API_BASE_URL}/recipes`);
     return response.data;
   } catch (error) {
     throw error;
   }
-};
+}
 
-// Ajouter une recette
-export const fetchAddRecipe = async (recipe) => {
+// Requete pour ajouter une recette
+export async function fetchAddRecipe(recipe) {
   try {
     const response = await axios.post(`${API_BASE_URL}/recipes`, recipe);
     return response.data;
@@ -33,8 +33,8 @@ export const fetchAddRecipe = async (recipe) => {
   }
 };
 
-// Modifier une recette
-export const fetchEditRecipe = async (recipeId) => {
+// Requete pour modifier une recette
+export async function fetchEditRecipe(recipeId) {
   try {
     const response = await axios.put(`${API_BASE_URL}/recipe/${recipeId}`);
     return response.data;
@@ -43,8 +43,8 @@ export const fetchEditRecipe = async (recipeId) => {
   }
 };
 
-// Supprimer une recette
-export const fetchDeleteRecipe = async (recipeId) => {
+// Requete pour supprimer une recette
+export async function fetchDeleteRecipe(recipeId) {
   try {
     const response = await axios.delete(`${API_BASE_URL}/recipe/${recipeId}`);
     return response.data;

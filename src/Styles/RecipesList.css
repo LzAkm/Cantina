@@ -32,45 +32,50 @@ div.filters{
 .filters .filter{
     margin: 8px;
     padding: 3px;
-    border: none;
+    color: white;
     margin-bottom: 0;
     padding-left: 10px;
     padding-right: 5px;
     border-radius: 5px;
-    background-color: white;
+    border: 1px solid #62626f;
+    background-color: #1c2032;
 }
 
 .min-personne{
     width: 55px;
     margin: 8px;
     padding: 3px;
-    border: none;
+    color: white;
     margin-bottom: 0;
     padding-left: 10px;
     padding-right: 5px;
     border-radius: 5px;
-    background-color: white;
+    border: 1px solid #62626f;
+    background-color: #1c2032;
 }
 
 .max-personne{
     width: 55px;
     margin: 8px;
     padding: 3px;
-    border: none;
+    color: white;
     margin-bottom: 0;
     padding-left: 10px;
     padding-right: 5px;
     border-radius: 5px;
-    background-color: white;
+    border: 1px solid #62626f;
+    background-color: #1c2032;
 }
 
 select.filter-difficulty{
     margin: 8px;
     border: none;
     padding: 5px;
+    color: white;
     padding-left: 8px;
     border-radius: 5px;
-    background-color: white;
+    border: 1px solid #62626f;
+    background-color: #1c2032;
 }
 
 button.remove-filters{
@@ -79,6 +84,6 @@ button.remove-filters{
 }
 
 .cross-icon{
-    color: white;
+    color: #235fe3;
     font-size: 1.8rem;
 }

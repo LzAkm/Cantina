@@ -4,25 +4,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import EditRecipe from './EditRecipe';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { deleteRecipe } from '../store/reducers/recipeSlice';
 import { useRecipe } from '../Hooks/useRecipe.jsx';
 
-function RecipeCard({ recipe, onEdit }) {
-  const dispatch = useDispatch();
+function RecipeCard({ recipe, onEdit, onDelete }) {
   const { recipeData, errorMessage, loading } = useRecipe(recipe.id);
   const [isEditing, setIsEditing] = useState(false);
 
   const handleDeleteClick = () => {
-    dispatch(deleteRecipe(recipe.id));
+    onDelete(recipe.id);
   };
 
-   // Fonction pour gérer le clic sur le bouton d'édition
-   const handleEditClick = () => {
+
+  // Fonction pour gérer le clic sur le bouton d'édition
+  const handleEditClick = () => {
     if (recipeData) {
-      // Les données de la recette sont maintenant disponibles
-      console.log("Données de la recette à éditer :", recipeData);
       setIsEditing(true);
+      console.log(recipeData);
     }
   };
 
@@ -57,7 +54,7 @@ function RecipeCard({ recipe, onEdit }) {
       <div className='actions'>
         <button className='delete-btn' onClick={handleDeleteClick}><FontAwesomeIcon className='icon' icon={faTrash} /></button>
         <button className='edit-btn' onClick={handleEditClick}>
-          <Link to='/editRecipe'>
+          <Link to={`/editRecipe/${recipe.id}`}> 
             <FontAwesomeIcon className='icon' icon={faPen} />
           </Link>
         </button>
@@ -80,12 +77,12 @@ function RecipeCard({ recipe, onEdit }) {
         </div>
       </div>
       <div className='recipe-footer'>
-        <button className='details-btn'><Link to={`/recipes/${recipe.id}`}>En cuisine !</Link></button>
+        <button className='details-btn'><Link className='link' to={`/recipes/${recipe.id}`}>En cuisine !</Link></button>
       </div>
 
-      {isEditing && (
+      {isEditing && recipeData &&(
         <EditRecipe
-          recipeData={recipeData}
+          recipeToEdit={recipeData}
           onSubmit={handleEditSubmit}
         />
       )}

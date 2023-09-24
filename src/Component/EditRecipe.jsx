@@ -1,13 +1,19 @@
+import React from 'react';
 import '../Styles/EditRecipe.css';
-import FormRecipe from './FormRecipe.jsx';
+import EditForm from './EditForm';
 
-function EditRecipe() {
-    
-    return (
-        <div className='form-content'>
-            <FormRecipe onSubmit={handleSubmit} data={recipe} />
-        </div>
-    );
+function EditRecipe({ recipeToEdit, onSubmit }) {
+
+  const handleEditSubmit = (editedRecipe) => {
+    console.log("Données de la recette à soumettre :", editedRecipe);
+    onSubmit(editedRecipe);
+  };
+
+  return (
+    <div className='form-content'>
+      <EditForm recipeToEdit={recipeToEdit} onSubmit={handleEditSubmit} />
+    </div>
+  );
 }
 
 export default EditRecipe;

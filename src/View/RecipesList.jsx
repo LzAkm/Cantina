@@ -38,7 +38,7 @@ function RecipesList() {
     } catch (error) {
       console.error('Erreur lors de l\'ajout de la recette :', error.message);
     }
-  };  
+  }; 
 
 
   function filterRecipes(recipe) {
