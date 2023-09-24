@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../Styles/RecipesList.css';
 import RecipeCard from '../Component/RecipeCard.jsx';
 import { useRecipes } from '../Hooks/useRecipes.jsx';
-import { fetchDeleteRecipe, fetchAddRecipe } from '../services/api';
+import { fetchDeleteRecipe, fetchAddRecipe } from '../services/api.js';
 import { faSquareXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -47,31 +47,26 @@ function RecipesList() {
     // Condition pour le champ "titre"
     if (title.trim() !== '' && !recipe.titre.toLowerCase().includes(title.toLowerCase())) {
       shouldInclude = false;
-      console.log(title);
     }
 
     // Condition pour le champ "niveau"
     if (selectValue !== '' && selectValue !== recipe.niveau) {
       shouldInclude = false;
-      console.log(selectValue);
     }
 
     // Condition pour le champ "temps"
     if (time !== '' && parseInt(time) !== recipe.tempsPreparation) {
       shouldInclude = false;
-      console.log(time);
     }
 
     // Condition pour le champ min portion
     if (minPortion !== '' && parseInt(minPortion) > recipe.nombrePersonnes) {
       shouldInclude = false;
-      console.log(minPortion);
     }
 
     // Condition pour le champ max portion
     if (maxPortion !== '' && parseInt(maxPortion) < recipe.nombrePersonnes) {
       shouldInclude = false;
-      console.log(maxPortion);
     }
 
     return shouldInclude;
