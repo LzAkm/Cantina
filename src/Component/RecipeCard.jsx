@@ -51,6 +51,9 @@ function RecipeCard({ recipe, onDelete }) {
     badgeClass = 'red';
   }
 
+  // Gestionnaire pluriel/singulier du champs proportion
+  let personsText = recipeData.personnes === 1 ? '1 personne' : `${recipeData.personnes} personnes`;
+
   return (
     <div className='recipe-card'>
       <div className='actions'>
@@ -74,7 +77,7 @@ function RecipeCard({ recipe, onDelete }) {
           </div>
           <div className='proportion'>
             <p className='grey'>Portion</p>
-            <p className='bold'>{recipeData.personnes} personnes</p>
+            <p className='bold'>{personsText}</p>
           </div>
         </div>
       </div>
