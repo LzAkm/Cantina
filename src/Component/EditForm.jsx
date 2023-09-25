@@ -1,11 +1,12 @@
 import '../Styles/FormRecipe.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareMinus } from '@fortawesome/free-solid-svg-icons';
-import 'react-toastify/dist/ReactToastify.css';
 import { useState } from 'react';
 import { fetchEditRecipe } from '../services/api.js';
 import { useNavigate } from 'react-router';
 import '../Styles/EditForm.css';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 function EditForm({ recipeToEdit }) {
     const [isOpen, setIsOpen] = useState(true);
@@ -94,9 +95,12 @@ function EditForm({ recipeToEdit }) {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
+    
         try {
             await fetchEditRecipe(recipe.id, recipe);
+            toast.success('Recette modifiée avec succès', {
+                position: toast.POSITION.TOP_RIGHT,
+              });
             navigate('/');
         } catch (error) {
             console.error("Erreur lors de la modification de la recette :", error.message);

@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react';
 import '../Styles/RecipesList.css';
 import RecipeCard from '../Component/RecipeCard.jsx';
 import { useRecipes } from '../Hooks/useRecipes.jsx';
-import { fetchDeleteRecipe, fetchAddRecipe } from '../services/api.js';
+import { fetchDeleteRecipe } from '../services/api.js';
 import { faSquareXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function RecipesList() {
   const { recipes, loading } = useRecipes();
@@ -26,6 +29,10 @@ function RecipesList() {
       // Supression de la liste locale
       setRecipesList(recipesList.filter(r => r.id !== recipeId))
       console.log('Recette supprimée avec succès.');
+      
+      toast.success('Recette supprimée avec succès', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     } catch (error) {
       console.error('Erreur lors de la suppression de la recette :', error.message);
     }

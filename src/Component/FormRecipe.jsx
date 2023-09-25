@@ -4,6 +4,9 @@ import { faSquareMinus } from '@fortawesome/free-solid-svg-icons';
 import { fetchAddRecipe } from '../services/api.js';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function FormRecipe() {
     const [recipe, setRecipe] = useState({
@@ -103,6 +106,9 @@ function FormRecipe() {
 
         try {
             await fetchAddRecipe(newRecipe);
+            toast.success('Recette ajoutée avec succès', {
+                position: toast.POSITION.TOP_RIGHT,
+              });
             return navigate('/');
         } catch (error) {
             console.error("Erreur lors de l'ajout de la recette :", error.message);
