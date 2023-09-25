@@ -11,10 +11,12 @@ function EditForm({ recipeToEdit }) {
     const [isOpen, setIsOpen] = useState(true);
     const navigate = useNavigate();
 
+    // Fermeture / ouverture du formulraire
     const toggleForm = () => {
         setIsOpen(!isOpen);
     };
 
+    // Récupération des data via l'état local d'EditForm
     const [recipe, setRecipe] = useState({
         id: recipeToEdit ? recipeToEdit.id : null,
         photo: recipeToEdit ? recipeToEdit.photo : '',
