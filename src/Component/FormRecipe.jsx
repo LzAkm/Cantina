@@ -46,12 +46,12 @@ function FormRecipe() {
     const handleInputChange = (event) => {
         const { name, value } = event.target;
 
-        if (!value.startsWith('https://') && !value.startsWith('http://')) {
+        // Vérifier si le champ "photo" est rempli et que l'URL n'est pas valide
+        if (name === 'photo' && value.trim() !== '' && !value.startsWith('http://') && !value.startsWith('https://')) {
             setPhotoError("⚠️ L'URL doit commencer par 'http://' ou 'https://'");
         } else {
             setPhotoError('');
         }
-
         const finalValue = event.target.type === "number" ? Number(value) : value
         setRecipe({ ...recipe, [name]: finalValue });
     };
@@ -103,13 +103,13 @@ function FormRecipe() {
             ingredients: recipe.ingredients,
             etapes: recipe.etapes.filter((etape) => etape.trim() !== ''),
         };
-        
+
 
         try {
             await fetchAddRecipe(newRecipe);
             toast.success('Recette ajoutée avec succès', {
                 position: toast.POSITION.TOP_RIGHT,
-              });
+            });
             return navigate('/');
         } catch (error) {
             console.error("Erreur lors de l'ajout de la recette :", error.message);
