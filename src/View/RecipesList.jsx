@@ -10,8 +10,8 @@ function RecipesList() {
   const { recipes, loading } = useRecipes();
   const [recipesList, setRecipesList] = useState(recipes);
   const [selectValue, setSelectValue] = useState('');
-  const [minPortion, setMinPortion] = useState('');
-  const [maxPortion, setMaxPortion] = useState('');
+  /* const [minPortion, setMinPortion] = useState('');
+  const [maxPortion, setMaxPortion] = useState(''); */
   const [title, setTitle] = useState('');
   const [time, setTime] = useState('');
   
@@ -63,7 +63,7 @@ function RecipesList() {
       shouldInclude = false;
     }
 
-    // Condition pour le champ min portion
+    /* // Condition pour le champ min portion
     if (minPortion !== '' && parseInt(minPortion) > recipe.nombrePersonnes) {
       shouldInclude = false;
     }
@@ -71,10 +71,18 @@ function RecipesList() {
     // Condition pour le champ max portion
     if (maxPortion !== '' && parseInt(maxPortion) < recipe.nombrePersonnes) {
       shouldInclude = false;
-    }
+    } */
 
     return shouldInclude;
   }
+
+  // Reinitialisation des filtres
+  const handleRemoveFiltersClick = () => {
+    setTitle('');
+    setSelectValue('');
+    setTime(''); 
+  };
+  
 
   // Filtrage des recettes
   const filteredRecipes = recipesList.filter(filterRecipes);
@@ -98,7 +106,7 @@ function RecipesList() {
           <option value='jedi'>Jedi</option>
           <option value='maitre'>Maître</option>
         </select>
-        <input className='min-personne'
+        {/* <input className='min-personne'
           type='number'
           name='min-portion'
           min={1}
@@ -115,7 +123,7 @@ function RecipesList() {
           value={maxPortion}
           onKeyDown={(e) => e.preventDefault()}
           onChange={(event) => setMaxPortion(event.target.value)}
-        />
+        /> */}
         <input className='filter'
           type='number'
           name='PrepTime'
@@ -126,7 +134,7 @@ function RecipesList() {
           onKeyDown={(e) => e.preventDefault()}
           onInput={(event) => setTime(event.target.value)}
         />
-        <button className='remove-filters'><FontAwesomeIcon className='cross-icon' icon={faSquareXmark} /></button>
+        <button className='remove-filters' onClick={handleRemoveFiltersClick}><FontAwesomeIcon className='cross-icon' icon={faSquareXmark} /></button>
       </div>
 
       <ul className='recipes-list'>
