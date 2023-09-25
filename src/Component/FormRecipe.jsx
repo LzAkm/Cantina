@@ -169,6 +169,7 @@ function FormRecipe() {
                         onChange={handleInputChange}
                         required
                     >
+                        <option value="" disabled selected>Choisissez le niveau</option>
                         <option value="padawan">Padawan</option>
                         <option value="jedi">Jedi</option>
                         <option value="maitre">Maître</option>
