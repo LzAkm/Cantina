@@ -14,7 +14,7 @@ function RecipesList() {
   const [maxPortion, setMaxPortion] = useState(''); */
   const [title, setTitle] = useState('');
   const [time, setTime] = useState('');
-  
+
   useEffect(() => {
     setRecipesList(recipes)
   }, [recipes])
@@ -41,7 +41,7 @@ function RecipesList() {
     } catch (error) {
       console.error('Erreur lors de l\'ajout de la recette :', error.message);
     }
-  }; 
+  };
 
 
   // Gestionnaire de filtres
@@ -59,8 +59,11 @@ function RecipesList() {
     }
 
     // Condition pour le champ "temps"
-    if (time !== '' && parseInt(time) !== recipe.tempsPreparation) {
-      shouldInclude = false;
+    if (time !== '') {
+      // Vérification du temps de préparation si le champ n'est pas vide
+      if (parseInt(time) < recipe.tempsPreparation) {
+        shouldInclude = false;
+      }
     }
 
     /* // Condition pour le champ min portion
@@ -76,13 +79,21 @@ function RecipesList() {
     return shouldInclude;
   }
 
+  // Gestion de la valeur de l'input
+  const handleTimeInput = (event) => {
+    const inputValue = event.target.value;
+    const numericValue = inputValue.replace(/\D/g, '');
+    setTime(numericValue);
+  };
+  
+
   // Reinitialisation des filtres
   const handleRemoveFiltersClick = () => {
     setTitle('');
     setSelectValue('');
-    setTime(''); 
+    setTime('');
   };
-  
+
 
   // Filtrage des recettes
   const filteredRecipes = recipesList.filter(filterRecipes);
@@ -124,16 +135,15 @@ function RecipesList() {
           onKeyDown={(e) => e.preventDefault()}
           onChange={(event) => setMaxPortion(event.target.value)}
         /> */}
-        <input className='filter'
-          type='number'
+        <input
+          className='filter'
+          type='text'
           name='PrepTime'
-          min={1}
-          max={150}
           placeholder='Temps prép. (min)'
           value={time}
-          onKeyDown={(e) => e.preventDefault()}
-          onInput={(event) => setTime(event.target.value)}
+          onInput={handleTimeInput}
         />
+
         <button className='remove-filters' onClick={handleRemoveFiltersClick}><FontAwesomeIcon className='cross-icon' icon={faSquareXmark} /></button>
       </div>
 
