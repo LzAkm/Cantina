@@ -17,7 +17,7 @@ function RecipeCard({ recipe, onDelete }) {
 
   const handleCloseDialog = () => {
     setIsDialogOpen(false);
-  }
+  };
 
   const handleConfirmDelete = () => {
     onDelete(recipe.id);
