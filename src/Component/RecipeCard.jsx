@@ -54,6 +54,8 @@ function RecipeCard({ recipe, onDelete }) {
   // Gestionnaire pluriel/singulier du champs proportion
   let personsText = recipeData.personnes === 1 ? '1 personne' : `${recipeData.personnes} personnes`;
 
+
+  const defaultImageUrl = 'URL_DE_VOTRE_IMAGE_PAR_DEFAUT';
   return (
     <div className='recipe-card'>
       <div className='actions'>
@@ -64,7 +66,7 @@ function RecipeCard({ recipe, onDelete }) {
           </Link>
         </button>
       </div>
-      <img className='recipe-img' src={recipeData.photo} alt='' />
+      <img className='recipe-img' src={recipeData.photo || defaultImageUrl} alt='photo de la recette' />
       <div className='recipe-body'>
         <h2>{recipeData.titre}</h2>
         <p>{recipeData.description}</p>

@@ -1,6 +1,26 @@
-.error-message{
+.error-message {
     color: #f84847;
     margin-top: 6px;
     font-weight: 400;
     font-size: 0.76rem;
+}
+
+
+div.field label {
+    position: relative;
+}
+
+div.form-ingredients label{
+    position: relative;
+}
+
+div.steps label{
+    position: relative;
+}
+
+span.required {
+    position: absolute;
+    top: 0;
+    left: 100;
+    color: #f84847;
 }

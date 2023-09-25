@@ -26,7 +26,7 @@ function FormRecipe() {
         updatedIngredients[index][field] = value;
         setRecipe({ ...recipe, ingredients: updatedIngredients });
     };
-    
+
 
     // Ajouter un nouvel ingrédient
     const addIngredient = () => {
@@ -124,7 +124,10 @@ function FormRecipe() {
                     {photoError && <p className='error-message'>{photoError}</p>}
                 </div>
                 <div className='field'>
-                    <label>Titre</label>
+                    <label>
+                        Titre
+                        <span className='required'>*</span>
+                    </label>
                     <input
                         type="text"
                         name="titre"
@@ -135,7 +138,10 @@ function FormRecipe() {
                     />
                 </div>
                 <div className='field'>
-                    <label>Description</label>
+                    <label>
+                        Description
+                        <span className='required'>*</span>
+                    </label>
                     <textarea
                         name="description"
                         placeholder='Description'
@@ -145,7 +151,10 @@ function FormRecipe() {
                     />
                 </div>
                 <div className='field'>
-                    <label>Niveau de difficulté</label>
+                    <label>
+                        Niveau de difficulté
+                        <span className='required'>*</span>
+                    </label>
                     <select
                         name="niveau"
                         value={recipe.niveau}
@@ -158,7 +167,10 @@ function FormRecipe() {
                     </select>
                 </div>
                 <div className='field'>
-                    <label>Nombre de personnes</label>
+                    <label>
+                        Nombre de personnes
+                        <span className='required'>*</span>
+                    </label>
                     <input
                         type="number"
                         name="personnes"
@@ -169,7 +181,11 @@ function FormRecipe() {
                     />
                 </div>
                 <div className='field'>
-                    <label>Temps de préparation (en min)</label>
+                    <label>
+                        Temps de préparation (en min)
+                        <span className='required'>*</span>
+
+                    </label>
                     <input
                         type="number"
                         name="tempsPreparation"
@@ -180,11 +196,14 @@ function FormRecipe() {
                     />
                 </div>
                 <div className='form-ingredients'>
-                    <label>Ingrédients</label>
+                    <label>
+                        Ingrédients
+                        <span className='required'>*</span>
+                    </label>
                     {recipe.ingredients.map((ingredient, index) => (
                         <div className='form-ingredient' key={index}>
                             <input
-                                type="number"
+                                type="text"
                                 placeholder="Quantité"
                                 min={1}
                                 value={ingredient[0]}
@@ -207,7 +226,10 @@ function FormRecipe() {
                 </div>
 
                 <div className='steps'>
-                    <label>Étapes de préparation</label>
+                    <label>
+                        Étapes de préparation
+                        <span className='required'>*</span>
+                    </label>
                     {recipe.etapes.map((etape, index) => (
                         <div className='step' key={index}>
                             <textarea
