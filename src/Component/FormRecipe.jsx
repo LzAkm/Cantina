@@ -103,6 +103,7 @@ function FormRecipe() {
             ingredients: recipe.ingredients,
             etapes: recipe.etapes.filter((etape) => etape.trim() !== ''),
         };
+        
 
         try {
             await fetchAddRecipe(newRecipe);

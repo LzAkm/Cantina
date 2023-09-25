@@ -20,6 +20,11 @@ ul.recipes-list{
     justify-content: center;
 }
 
+ul.recipes-list p.filter-error{
+    color: white;
+    font-size: 1.1rem;
+}
+
 li.link{
     color: black;
 }

@@ -143,15 +143,16 @@ function RecipesList() {
       </div>
 
       <ul className='recipes-list'>
-        {loading ? (
-          <div>Loading...</div>
-        ) : (
-          filteredRecipes.map((recipe) => (
-            <RecipeCard key={recipe.id} recipe={recipe} onDelete={handleRecipeDelete} />
-          ))
-        )}
-      </ul>
-
+      {loading ? (
+        <div>Loading...</div>
+      ) : filteredRecipes.length === 0 ? (
+        <p className='filter-error'>😞 Aucune recette ne répond à ces critères, jeune padawan</p>
+      ) : (
+        filteredRecipes.map((recipe) => (
+          <RecipeCard key={recipe.id} recipe={recipe} onDelete={handleRecipeDelete} />
+        ))
+      )}
+    </ul>
     </div>
   );
 }
