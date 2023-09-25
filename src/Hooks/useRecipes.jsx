@@ -6,6 +6,7 @@ export function useRecipes() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        console.log('test changement de page');
         const fetchData = async () => {
             try {
                 const data = await fetchAllRecipes();

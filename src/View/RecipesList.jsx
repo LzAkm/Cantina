@@ -14,14 +14,16 @@ function RecipesList() {
   const [maxPortion, setMaxPortion] = useState('');
   const [title, setTitle] = useState('');
   const [time, setTime] = useState('');
-
+  
   useEffect(() => {
     setRecipesList(recipes)
   }, [recipes])
 
+  // Suppression d'une recette
   const handleRecipeDelete = async (recipeId) => {
     try {
       await fetchDeleteRecipe(recipeId);
+      // Supression de la liste locale
       setRecipesList(recipesList.filter(r => r.id !== recipeId))
       console.log('Recette supprimée avec succès.');
     } catch (error) {
@@ -29,6 +31,7 @@ function RecipesList() {
     }
   };
 
+  // Ajout d'une recette
   const handleRecipeAdd = async (recipeId) => {
     try {
       const addedRecipe = await fetchAddRecipe(recipeId);
@@ -41,6 +44,7 @@ function RecipesList() {
   }; 
 
 
+  // Gestionnaire de filtres
   function filterRecipes(recipe) {
     let shouldInclude = true;
 
@@ -72,6 +76,7 @@ function RecipesList() {
     return shouldInclude;
   }
 
+  // Filtrage des recettes
   const filteredRecipes = recipesList.filter(filterRecipes);
 
   return (
