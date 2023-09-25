@@ -1,11 +1,9 @@
 import '../Styles/FormRecipe.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareMinus } from '@fortawesome/free-solid-svg-icons';
-import 'react-toastify/dist/ReactToastify.css';
 import { fetchAddRecipe } from '../services/api.js';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { toast } from 'react-toastify';
 
 function FormRecipe() {
     const [recipe, setRecipe] = useState({
@@ -86,11 +84,12 @@ function FormRecipe() {
         }
     };
 
-
     const navigate = useNavigate();
 
     // Soumettre le formulaire
-    const handleSubmit = () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
         const newRecipe = {
             photo: recipe.photo,
             titre: recipe.titre,
@@ -103,13 +102,11 @@ function FormRecipe() {
         };
 
         try {
-            fetchAddRecipe(newRecipe);
+            await fetchAddRecipe(newRecipe);
             return navigate('/');
         } catch (error) {
             console.error("Erreur lors de l'ajout de la recette :", error.message);
         }
-
-        toast.success('Votre recette a été ajoutée');
     };
 
 
@@ -252,6 +249,7 @@ function FormRecipe() {
             </div>
             <button className='add-recipe' type="submit">Publier la recette</button>
         </form>
+
     );
 }
 

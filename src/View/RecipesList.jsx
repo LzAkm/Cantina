@@ -31,18 +31,6 @@ function RecipesList() {
     }
   };
 
-  // Ajout d'une recette
-  const handleRecipeAdd = async (recipeId) => {
-    try {
-      const addedRecipe = await fetchAddRecipe(recipeId);
-      const updatedRecipesList = [...recipesList, addedRecipe];
-      setRecipesList(updatedRecipesList);
-      console.log('Recette ajoutée avec succès.');
-    } catch (error) {
-      console.error('Erreur lors de l\'ajout de la recette :', error.message);
-    }
-  };
-
 
   // Gestionnaire de filtres
   function filterRecipes(recipe) {
@@ -152,7 +140,7 @@ function RecipesList() {
           <div>Loading...</div>
         ) : (
           filteredRecipes.map((recipe) => (
-            <RecipeCard key={recipe.id} recipe={recipe} onDelete={handleRecipeDelete} onAdd={() => handleRecipeAdd(recipe.id)} />
+            <RecipeCard key={recipe.id} recipe={recipe} onDelete={handleRecipeDelete} />
           ))
         )}
       </ul>
