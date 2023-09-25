@@ -39,13 +39,6 @@ function FormRecipe() {
         });
     };
 
-    // Supprimer un ingrédient
-    const removeIngredient = (index) => {
-        const updatedIngredients = [...recipe.ingredients];
-        updatedIngredients.splice(index, 1);
-        setRecipe({ ...recipe, ingredients: updatedIngredients });
-    };
-
     // Gérer les changements dans les champs de texte
     const [photoError, setPhotoError] = useState('');
 
@@ -75,12 +68,24 @@ function FormRecipe() {
         setRecipe({ ...recipe, [field]: [...recipe[field], ''] });
     };
 
+    // Supprimer un ingrédient
+    const removeIngredient = (index) => {
+        if (index > 0) { // Vérifier que l'index n'est pas le premier
+            const updatedIngredients = [...recipe.ingredients];
+            updatedIngredients.splice(index, 1);
+            setRecipe({ ...recipe, ingredients: updatedIngredients });
+        }
+    };
+
     // Supprimer un champ d'étape ou d'ingrédient
     const removeStepIngredient = (index, field) => {
-        const updatedArray = [...recipe[field]];
-        updatedArray.splice(index, 1);
-        setRecipe({ ...recipe, [field]: updatedArray });
+        if (index > 0) { // Vérifier que l'index n'est pas le premier
+            const updatedArray = [...recipe[field]];
+            updatedArray.splice(index, 1);
+            setRecipe({ ...recipe, [field]: updatedArray });
+        }
     };
+
 
     const navigate = useNavigate();
 
